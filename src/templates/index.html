@@ -9,10 +9,29 @@
     <title>GPU Trends</title>
 </head>
 <body>
+    <main>
+        <section>
+            <div id="gpu-chart-container">
+                <canvas id="gpu-trend-chart"></canvas>
+            </div>
+            <div>
+                <canvas id="gpu-price-chart"></canvas>
+            </div>
+        </section>
+        <section></section>
+    </main>
+
+
+    
+    <script src="./static/chart.js"></script>
     <script>
-        fetch('./gpu_trend')
+        // fetch('./gpu_trend')
+        //     .then(response => response.json())
+        //     .then(data => drawTrendChart(data, 'gpu-trend-chart'));
+
+        fetch('./gpu_prices')
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => drawPriceChart(data, 'gpu-price-chart'));
     </script>
 
 </body>

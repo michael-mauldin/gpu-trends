@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Any
 
 from flask import Flask, render_template
 
@@ -13,7 +14,7 @@ flask run
 
 app: Flask = Flask(__name__)
 
-DATABASE: str = '../tests.db'
+DATABASE: str = '../posts.db'
 
 @app.route('/')
 def index() -> str:
@@ -21,9 +22,14 @@ def index() -> str:
 
 
 @app.route('/gpu_trend')
-def get_gpu_trend() -> dict[str, str]:
+def get_gpu_trend() -> dict[Any, Any]:
     return charts.get_gpu_trend_chart_data(DATABASE)
     
+
+@app.route('/gpu_prices')
+def get_gpu_prices() -> str:
+    return charts.get_gpu_price_data(DATABASE)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
