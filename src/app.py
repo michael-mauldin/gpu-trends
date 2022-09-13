@@ -27,7 +27,7 @@ def get_gpu_trend() -> dict[Any, Any]:
     
 
 @app.route('/gpu_prices')
-def get_gpu_prices() -> str:
+def get_gpu_prices() -> dict[Any, Any]:
     return charts.get_gpu_price_data(DATABASE)
 
 

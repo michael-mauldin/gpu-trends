@@ -24,6 +24,7 @@ WITH rank_price_to_msrp AS (
 		datetime(p.created_utc, 'unixepoch', 'localtime') AS postdate,
 		m.company,
 		m.model,
+		p.url,
 		p.price,
 		p.price / m.launch_price AS price_to_msrp,
 		PERCENT_RANK() OVER (ORDER BY p.price / m.launch_price) price_rank

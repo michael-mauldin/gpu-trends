@@ -134,16 +134,16 @@ const horizontalRule = {
     }
 }
 
-function drawPriceChart(data, canvas_id) {
+function drawPriceChart(data, company, canvas_id) {
     const ctx = document.getElementById(canvas_id).getContext('2d');
     const trendChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: data.map(d => d.model),
+            labels: data[company].map(d => d.model),
             datasets: [
                 {
                     label: 'Current',
-                    data: data.map(d => [d.now, d.mo3_ago]),
+                    data: data[company].map(d => [d.now, d.mo3_ago]),
                     backgroundColor: 'blue',
                 }
             ]

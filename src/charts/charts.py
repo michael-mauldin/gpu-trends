@@ -40,7 +40,7 @@ def get_gpu_trend_chart_data(database: str) -> dict[str, str]:
     return output
 
 
-def get_gpu_price_data(database: str) -> str:
+def get_gpu_price_data(database: str) -> dict[Any, Any]:
     with sqlite3.connect(database) as connection:
         query: str = """
         WITH daycount AS (
@@ -61,20 +61,44 @@ def get_gpu_price_data(database: str) -> str:
             WHERE period IS NOT NULL
         )
         SELECT
-            period,
+            company,
             model,
+            period,
             ROUND(AVG(price), 2) AS avg_price
         FROM addperiod
-        GROUP BY model, period
-        ORDER BY model, period
+        GROUP BY company, model, period
+        ORDER BY company, model, period
         """
         df: pd.DataFrame = (
             pd.read_sql(query, connection)
-            .pivot(index='model', columns='period')
+            .pivot(index=['company', 'model'], columns='period')
             .dropna()
             .reset_index()
             .sort_values(('avg_price', 'Month 3'))
         )
-        df.columns = ['model', 'now', 'mo3_ago']  # type: ignore
+        df.columns = ['company', 'model', 'now', 'mo3_ago']  # type: ignore
+        output: dict[Any, Any] = {}
+        for company, group in df.groupby('company'):
+            output[company] = group.to_dict(orient='records')
         
-        return df.to_json(orient='records')
+        return output
+
+
+def get_gpu_posts_data(database: str) -> dict[Any, Any]:
+    with sqlite3.connect(database) as connection:
+        query: str = """
+        select
+            postdate,
+            company,
+            model,
+            url,
+            price,
+            price_to_msrp
+        from
+            plot_posts
+        where
+            postdate > date( (select max(postdate) from plot_posts), '-7 days' )
+        """
+        
+        df: pd.DataFrame = pd.read_sql(query, connection)
+        df_models: pd.DataFrame = df.model.unique()
