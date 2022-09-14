@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="{{url_for('static', filename='gputrends.css')}}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <title>GPU Trends</title>
@@ -14,6 +16,9 @@
             <div id="gpu-chart-container">
                 <canvas id="gpu-trend-chart"></canvas>
             </div>
+            <div id="description"></div>
+        </section>
+        <section>
             <div>
                 <canvas id="amd-price-chart"></canvas>
             </div>
@@ -21,13 +26,33 @@
                 <canvas id="nvidia-price-chart"></canvas>
             </div>
         </section>
-        <section></section>
+        <section>
+            <select name="model" id="model-select" onchange="updatePostsTable()"></select>
+            <table id="gpu-posts-table">
+                <thead>
+                    <tr>
+                        <th>Posted</th>
+                        <th>Co.</th>
+                        <th>Model</th>
+                        <th>Price</th>
+                        <th>Price/MSRP</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody id="gpu-posts-table-data"></tbody>
+            </table>
+        </section>
     </main>
 
 
-    
-    <script src="./static/chart.js"></script>
+    <script src="{{url_for('static', filename='chart.js')}}"></script>
+    <script src="{{url_for('static', filename='tables.js')}}"></script>
     <script>
+        async function initializePosts() {
+            await updateDropdown();
+            await updatePostsTable();
+        }
+
         fetch('./gpu_trend')
             .then(response => response.json())
             .then(data => drawTrendChart(data, 'gpu-trend-chart'));
@@ -38,6 +63,8 @@
                 drawPriceChart(data, 'AMD', 'amd-price-chart');
                 drawPriceChart(data, 'Nvidia', 'nvidia-price-chart');
             })
+
+        initializePosts();
     </script>
 
 </body>

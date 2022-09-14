@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Any
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 from src.charts import charts
 
@@ -29,6 +29,18 @@ def get_gpu_trend() -> dict[Any, Any]:
 @app.route('/gpu_prices')
 def get_gpu_prices() -> dict[Any, Any]:
     return charts.get_gpu_price_data(DATABASE)
+
+
+@app.route('/gpu_list')
+def get_gpu_list() -> str:
+    return charts.get_gpu_list_data(DATABASE)
+
+
+@app.route('/gpu_posts')
+def get_gpu_posts() -> str:
+    model: str | None = request.args.get('model')
+    return charts.get_gpu_posts_data(DATABASE, model)
+
 
 
 if __name__ == '__main__':

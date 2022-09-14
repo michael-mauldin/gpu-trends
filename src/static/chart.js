@@ -7,8 +7,10 @@ function drawTrendChart(data, canvas_id) {
                 data: data['AMD'].map(d => ({'x': new Date(d.postdate), 'y': d.price_to_msrp})),
                 label: 'AMD',
                 showLine: true,
-                borderColor: 'red',
+                borderColor: '#ff555f',
+                backgroundColor: '#ff555f',
                 borderWidth: 4,
+                pointRadius: 0,
                 tension: 0.1
             },
             {
@@ -16,8 +18,10 @@ function drawTrendChart(data, canvas_id) {
                 data: data['Nvidia'].map(d => ({'x': new Date(d.postdate), 'y': d.price_to_msrp})),
                 label: 'AMD',
                 showLine: true,
-                borderColor: 'green',
+                borderColor: '#2ccdcd',
+                backgroundColor: '#2ccdcd',
                 borderWidth: 4,
+                pointRadius: 0,
                 tension: 0.1
             },
             {
@@ -25,9 +29,10 @@ function drawTrendChart(data, canvas_id) {
                 data: data['scatter'].map(d => ({'x': new Date(d.postdate), 'y': d.price_to_msrp})),
                 label: 'Posts',
                 showLine: false,
-                borderColor: 'red',
-                pointRadius: 2,
+                pointBackgroundColor: 'rgb(215, 215, 215, 0.2)',
+                pointBorderColor: 'rgb(215, 215, 215, 0.2)',
                 pointBorderWidth: 1,
+                pointRadius: 2,
                 tension: 0.1
             }
         ]},
@@ -55,13 +60,19 @@ function drawTrendChart(data, canvas_id) {
                         displayFormats: {'quarter': 'MMM yy'}
                     },
                     ticks: {
-                        color: '#406086',
-                        drawTicks: true
+                        color: '#eff2f5',
+                        drawTicks: true,
+                        font: {
+                            size: 12,
+                        }
                     }
                 },
                 y: {
                     ticks: {
-                        color: '#406086'
+                        color: '#eff2f5',
+                        font: {
+                            size: 12,
+                        }
                     },
                     grid: {
                         color: '#406086',
@@ -80,15 +91,22 @@ function drawTrendChart(data, canvas_id) {
                         pointStyle: 'circle',
                         boxWidth: 20,
                         boxHeight: 4,
-                        color: '#FFFFFF',
+                        color: '#eff2f5',
                         padding: 24,
-                        textAlign: 'right'
+                        textAlign: 'right',
+                        font: {
+                            size: 12,
+                        },
                     }
                 },
                 title: {
                     display: true,
+                    color: '#eff2f5',
                     text: 'GPU Price to MSRP Trend',
                     align: 'start',
+                    font: {
+                        size: 12,
+                    },
                     padding: {
                         top: 5,
                         bottom: 5
@@ -96,7 +114,10 @@ function drawTrendChart(data, canvas_id) {
                 },
                 subtitle: {
                     display: true,
-                    text: 'The 30-day average price vs. MSRP trend for the past 24 months'
+                    text: 'The 30-day average price vs. MSRP trend for the past 24 months',
+                    font: {
+                        size: 12,
+                    }
                 },
                 tooltip: {
                     enable: false,
@@ -107,7 +128,7 @@ function drawTrendChart(data, canvas_id) {
                 horizontalRule: {
                     lineColor: '#e6eaef',
                     yPosition: 0,
-                    borderDash: [5, 5]
+                    borderDash: [4, 7]
                 }
             }
         },

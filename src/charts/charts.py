@@ -5,9 +5,18 @@ import sqlite3
 
 def get_gpu_trend_chart_data(database: str) -> dict[str, str]:
     """"""
+    query: str = """
+    SELECT
+        postdate,
+        company,
+        model,
+        price,
+        (price_to_msrp - 1) * 100 AS price_to_msrp
+    FROM plot_posts
+    """
     with sqlite3.connect(database) as connection:
         df:pd.DataFrame = pd.read_sql(
-            'SELECT * FROM plot_posts',
+            query,
             connection,
             parse_dates=['postdate'],
             index_col='postdate'
@@ -84,21 +93,38 @@ def get_gpu_price_data(database: str) -> dict[Any, Any]:
         return output
 
 
-def get_gpu_posts_data(database: str) -> dict[Any, Any]:
+def get_gpu_list_data(database: str) -> str:
     with sqlite3.connect(database) as connection:
         query: str = """
-        select
+        SELECT
+            DISTINCT model
+        FROM
+            plot_posts
+        WHERE
+            postdate > date( (select max(postdate) from plot_posts), '-7 days' )
+        """
+        return pd.read_sql(query, connection).to_json(orient='records')
+
+
+def get_gpu_posts_data(database: str, model: str | None) -> str:
+    with sqlite3.connect(database) as connection:
+        query: str = """
+        SELECT
             postdate,
             company,
             model,
             url,
             price,
-            price_to_msrp
-        from
+            price_to_msrp,
+            LOWER(REPLACE(model, ' ', '')) AS abbrev
+        FROM
             plot_posts
-        where
-            postdate > date( (select max(postdate) from plot_posts), '-7 days' )
+        WHERE
+            postdate > date( (select max(postdate) from plot_posts), '-7 days' ) AND
+            abbrev=:model
+        ORDER BY
+            postdate DESC
         """
-        
-        df: pd.DataFrame = pd.read_sql(query, connection)
-        df_models: pd.DataFrame = df.model.unique()
+        params: dict[str, str] = {'model': model} if model else {'model': ''}
+
+        return pd.read_sql(query, connection, parse_dates=['postdate'], params=params).to_json(orient='records')
