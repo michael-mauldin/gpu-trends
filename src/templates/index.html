@@ -13,34 +13,40 @@
 <body>
     <main>
         <section>
-            <div id="gpu-chart-container">
-                <canvas id="gpu-trend-chart"></canvas>
-            </div>
-            <div id="description"></div>
-        </section>
-        <section>
+            <figure id="gpu-chart-container">
+                <canvas id="gpu-trend-chart" style="width:100%;height:100%;"></canvas>
+            </figure>
             <div>
+                <h2>GPU Markets</h2>
+            </div>
+        </section>
+        <hr>
+        <section>
+            <figure>
                 <canvas id="amd-price-chart"></canvas>
-            </div>
-            <div>
+            </figure>
+            <figure>
                 <canvas id="nvidia-price-chart"></canvas>
-            </div>
+            </figure>
         </section>
+        <hr>
         <section>
-            <select name="model" id="model-select" onchange="updatePostsTable()"></select>
-            <table id="gpu-posts-table">
-                <thead>
-                    <tr>
-                        <th>Posted</th>
-                        <th>Co.</th>
-                        <th>Model</th>
-                        <th>Price</th>
-                        <th>Price/MSRP</th>
-                        <th>Link</th>
-                    </tr>
-                </thead>
-                <tbody id="gpu-posts-table-data"></tbody>
-            </table>
+            <div>
+                <select name="model" id="model-select" onchange="updatePostsTable()"></select>
+                <table id="gpu-posts-table">
+                    <thead>
+                        <tr>
+                            <th>Posted</th>
+                            <th>Co.</th>
+                            <th>Model</th>
+                            <th>Price</th>
+                            <th>Price/MSRP</th>
+                            <th>Link</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gpu-posts-table-data"></tbody>
+                </table>
+            </div>
         </section>
     </main>
 
@@ -60,8 +66,8 @@
         fetch('./gpu_prices')
             .then(response => response.json())
             .then(data => {
-                drawPriceChart(data, 'AMD', 'amd-price-chart');
-                drawPriceChart(data, 'Nvidia', 'nvidia-price-chart');
+                drawPriceChart(data, 'AMD', '#ff555f', 'amd-price-chart');
+                drawPriceChart(data, 'Nvidia', '#2ccdcd', 'nvidia-price-chart');
             })
 
         initializePosts();
