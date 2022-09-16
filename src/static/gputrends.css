@@ -8,7 +8,7 @@
     --color-shadow: ;
     --color-text: ;
     --color-text-secondary: ;
-    --font-family: Arial, "Helvetica Neue", sans-serif;
+    --font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", sans-serif;
     --justify-main: center;
     --line-height: 1.5;
     --width-content: 1080px;
@@ -63,4 +63,25 @@ hr {
     height: 1px;
     margin: 4rem 0;
     width: 100%;
+}
+
+details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: .5em .5em 0;
+}
+
+summary {
+    font-weight: bold;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+}
+
+details[open] {
+    padding: .5em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: .5em;
 }

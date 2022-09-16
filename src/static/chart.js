@@ -11,7 +11,22 @@ function drawTrendChart(data, canvas_id) {
                 backgroundColor: '#ff555f',
                 borderWidth: 4,
                 pointRadius: 0,
-                tension: 0.1
+                tension: 0.1,
+                datalabels: {
+                    color: 'white',
+                    align: 'right',
+                    color: '#ff555f',
+                    font: {
+                        weight: 'bold',
+                        style: 'italic'
+                    },
+                    display: function(context) { 
+                        return (context.dataIndex === context.dataset.data.length - 1)
+                    },
+                    formatter: function(value) {
+                        return percentFormatter.format(value.y / 100);
+                    }
+                }
             },
             {
                 type: 'line',
@@ -22,7 +37,22 @@ function drawTrendChart(data, canvas_id) {
                 backgroundColor: '#2ccdcd',
                 borderWidth: 4,
                 pointRadius: 0,
-                tension: 0.1
+                tension: 0.1,
+                datalabels: {
+                    color: 'white',
+                    align: 'right',
+                    color: '#2ccdcd',
+                    font: {
+                        weight: 'bold',
+                        style: 'italic'
+                    },
+                    display: function(context) { 
+                        return (context.dataIndex === context.dataset.data.length - 1)
+                    },
+                    formatter: function(value) {
+                        return percentFormatter.format(value.y / 100);
+                    }
+                }
             },
             {
                 type: 'line',
@@ -33,7 +63,10 @@ function drawTrendChart(data, canvas_id) {
                 pointBorderColor: 'rgb(215, 215, 215, 0.2)',
                 pointBorderWidth: 1,
                 pointRadius: 2,
-                tension: 0.1
+                tension: 0.1,
+                datalabels: {
+                    display: false,
+                }
             }
         ]},
         options: {
@@ -87,6 +120,8 @@ function drawTrendChart(data, canvas_id) {
             layout: {
                 padding: {
                     top: 0,
+                    right: 36,
+                    left: 10,
                 },
                 autoPadding: false,
             },
@@ -109,24 +144,27 @@ function drawTrendChart(data, canvas_id) {
                     }
                 },
                 title: {
-                    display: false,
-                    // color: '#eff2f5',
-                    // text: 'GPU Price to MSRP Trend',
-                    // align: 'start',
-                    // font: {
-                    //     size: 12,
-                    // },
-                    // padding: {
-                    //     top: 5,
-                    //     bottom: 5
-                    // }
+                    display: true,
+                    color: 'ghostwhite',
+                    text: 'Price-to-MSRP Trend',
+                    align: 'start',
+                    font: {
+                        size: 16,
+                    },
+                    padding: {
+                        top: 5,
+                        bottom: 0
+                    }
                 },
                 subtitle: {
-                    display: false,
-                    // text: 'The 30-day average price vs. MSRP trend for the past 24 months',
-                    // font: {
-                    //     size: 12,
-                    // }
+                    display: true,
+                    color: 'ghostwhite',
+                    align: 'start',
+                    text: 'Average price as a % of MSRP across all GPU models for the past 24 months',
+                    font: {
+                        size: 12,
+                        style: 'italic'
+                    }
                 },
                 tooltip: {
                     enable: false,
@@ -141,7 +179,7 @@ function drawTrendChart(data, canvas_id) {
                 },
             }
         },
-        plugins: [backgroundColor, horizontalRule]
+        plugins: [backgroundColor, horizontalRule, ChartDataLabels]
     })
 }
 
@@ -161,7 +199,20 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                     borderColor: '#2ccdcd',
                     backgroundColor: '#2ccdcd',
                     pointRadius: 6,
-                    pointStyle: 'rectRot'
+                    pointStyle: 'rectRot',
+                    datalabels: {
+                        display: true,
+                        color: '#2ccdcd',
+                        font: {
+                            size: 12,                            
+                            weight: 'bold',
+                        },
+                        align: 'left',
+                        formatter: function(value, context) {
+                            let dataset = data[company][context.dataIndex];
+                            return percentFormatter.format((dataset['now'] - dataset['mo3_ago']) / dataset['mo3_ago']);
+                        }
+                    },
                 },
                 {
                     type: 'line',
@@ -171,15 +222,21 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                     borderColor: '#ff555f',
                     backgroundColor: '#ff555f',
                     pointRadius: 5,
-                    pointStyle: 'rectRot'
+                    pointStyle: 'rectRot',
+                    datalabels: {
+                        display: false,
+                    },
                 },
                 {
                     type: 'bar',
-                    label: 'Current',
+                    label: 'gap',
                     data: data[company].map(d => [d.now, d.mo3_ago]),
                     backgroundColor: 'ghostwhite',
                     barThickness: 'flex',
                     barPercentage: 0.5,
+                    datalabels: {
+                        display: false,
+                    },
                 },
             ]
         },
@@ -239,11 +296,45 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
             },
             plugins: {
                 legend: {
-                    display: false,
-                }
+                    display: true,
+                    labels: {
+                        color: 'ghostwhite',
+                        filter: function(item, data) {
+                            return item.text != 'gap';
+                        },
+                        usePointStyle: true,
+                        boxWidth: 20,
+                        boxHeight: 8,
+                        font: {
+                            size: 12,
+                        },
+                    },
+                },
+                title: {
+                    display: true,
+                    color: 'ghostwhite',
+                    text: `${company} Price Movement By Model`,
+                    align: 'start',
+                    font: {
+                        size: 16,
+                    },
+                    padding: {
+                        top: 0,
+                        bottom: 0
+                    }
+                },
+                subtitle: {
+                    display: true,
+                    color: 'ghostwhite',
+                    align: 'start',
+                    text: 'The current 30-day avg price vs. the 30-day avg price 3 months ago',
+                    font: {
+                        size: 12,
+                    }
+                },
             }
         },
-        plugins: [backgroundColor],
+        plugins: [backgroundColor, ChartDataLabels]
     });
 }
 
