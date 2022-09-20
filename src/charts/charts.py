@@ -124,7 +124,7 @@ def get_gpu_posts_data(database: str, model: str | None) -> str:
             abbrev=:model
         ORDER BY
             postdate DESC
+        LIMIT 5
         """
         params: dict[str, str] = {'model': model} if model else {'model': ''}
-
         return pd.read_sql(query, connection, parse_dates=['postdate'], params=params).to_json(orient='records')

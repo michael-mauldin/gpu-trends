@@ -1,74 +1,153 @@
-:root {
-    --border-radius: 5px;
-    --box-shadow: 2px 2px 10px;
-    --color-accent: ;
-    --color-bg: 'ghostwhite';
-    --color-bg-secondary: #073262;
-    --color-link: ;
-    --color-shadow: ;
-    --color-text: ;
-    --color-text-secondary: ;
-    --font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", sans-serif;
-    --justify-main: center;
-    --line-height: 1.5;
-    --width-content: 1080px;
-    --width-card: 36rem;
-    --height-card: calc(var(--width-card) * 0.5);
+:root  {
+    --background-color: #11191f;
+    --chart-background-color: #0c151c;
+    --text-color: #dbdbdb;
+    --font-size: 16px;
+    --spacing: 1rem;
+    --spacing-vertical: calc(var(--spacing) * 2);
+
+    --select-border: #777;
+    --select-focus: blue;
+    --select-arrow: var(--select-border);
+}
+
+/* CSS Reset ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (min-width: 576px) {
+    header, main, section {
+        --spacing-vertical: calc(var(--spacing) * 2.5);
+        --font-size: 14px;
+    }
+    .container {
+        --container-width: 510px;
+    }
+}
+@media (min-width: 768px) {
+    header, main, section {
+        --spacing-vertical: calc(var(--spacing) * 3.0);
+        --font-size: 16px;
+    }
+    .container {
+        --container-width: 700px;
+    }
+}
+@media (min-width: 992px) {
+    header, main, section {
+        --spacing-vertical: calc(var(--spacing) * 3.5);
+        --font-size: 18px;
+    }
+    .container {
+        --container-width: 700px;
+    }
+}
+@media (min-width: 1200px) {
+    header, main, section {
+        --spacing-vertical: calc(var(--spacing) * 4.0);
+        --font-size: 20px;
+    }
+    .container {
+        --container-width: 900px;
+    }
 }
 
 body {
-    background-color: var(--color-bg);
-    color: var(--color-text);
-    font-family: var(--font-family);
-    line-height: var(--line-height);
-    overflow-x: hidden;
+    background-color: var(--background-color);
+    background-repeat: no-repeat;
+    color: var(--text-color);
+    font-family: "Roboto", "Open Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+    width: 100%;
     padding: 0;
     margin: 0;
 }
 
-main, header, footer {
+header, main, footer {
+    width: 100%;
     margin: 0 auto;
-    max-width: var(--width-content);
-    padding: 3rem 0;
-    border: 1px solid black;
+    padding: 0;
+}
+
+header h1 {
+    text-align: center;
+    font-weight: 800;
+    font-size: calc(var(--font-size) * 3.0);
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 25%, rgba(100,100,100,1) 100%);
+    background-size: 100%;
+    background-repeat: repeat;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+
+header h1 span {
+    background-color: #cf1261;
+    background: conic-gradient(from 0deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
+    background-size: 100%;
+    background-repeat: repeat;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+}
+
+main {
+    background: linear-gradient(180deg, #11191f 0%, rgba(10, 53, 67, 0.5) 33%, rgba(10, 53, 67, 0.5) 66%, #11191f 100%);
 }
 
 section {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: var(--justify-main);
+    align-items: center;
 }
 
-section figure {
-    overflow: hidden;
-    margin: 1rem;
-    padding: 0.6rem;
-    width: var(--width-card);
-    height: var(--height-card);
-    border: 1px solid var(--color-bg-secondary);
-    box-shadow: var(--box-shadow) var(--color-shadow);
-    border-radius: var(--border-radius);
-    background-color: var(--color-bg-secondary);
-}
-
-section div {
-    margin: 1rem;
-    padding: 1rem;
-    border: 1px solid black;
-    width: var(--width-card);
-}
-
-hr {
-    border: none;
-    height: 1px;
-    margin: 4rem 0;
+.container {
     width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing);
+}
+
+.container p {
+    margin-bottom: 2rem;
+}
+
+figure {
+    height: calc(var(--container-width) * 0.5);
+    padding: var(--spacing) 0s;
+    margin: 0 auto;
+}
+
+#prices div figure {
+    width: calc(var(--container-width) * 0.5);
+    padding: 1rem;
+    margin: 0;
+}
+
+#prices .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    margin: 1rem;
+    padding: 0;
 }
 
 details {
-    border: 1px solid #aaa;
+    border: 1px solid var(--text-color);
     border-radius: 4px;
     padding: .5em .5em 0;
+    margin: var(--spacing) 3rem var(--spacing) 3rem;
+    cursor: pointer;
 }
 
 summary {
@@ -82,6 +161,90 @@ details[open] {
 }
 
 details[open] summary {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid var(--text-color);
     margin-bottom: .5em;
+}
+
+select {
+    /* reset */
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    outline: none;
+    color: var(--text-color);
+}
+
+/* style */
+
+select > option {
+    background: #11191f;
+ }
+
+.dropdown {
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    width: 100%;
+    min-width: 15ch;
+    max-width: 30ch;
+    border: 1px solid var(--text-color);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+}
+
+.dropdown::after {
+    content: "";
+    width: 0.8rem;
+    height: 0.5rem;
+    background-color: var(--text-color);
+    clip-path: polygon(100% 0%, 0% 0%, 50% 100%);
+    justify-self: end;
+}
+
+select,
+.dropdown::after {
+    grid-area: select;
+}
+
+option {
+    color: var(--text-color);
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-indent: 0;
+}
+
+table th:first-child {
+    border-radius: 0.25em 0 0 0.25em;
+}
+
+table th:last-child {
+    border-radius: 0 0.25em 0.25em 0;
+}
+
+thead tr {
+    background-color: rgba(10, 53, 67, 0.8);
+    border: 1px solid white;
+    border-radius: 0.25rem;
+}
+
+tr {
+    height: calc(var(--spacing) * 3.0);
+    border-bottom: 1px solid var(--text-color);
 }

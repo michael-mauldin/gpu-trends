@@ -12,36 +12,38 @@
     <title>GPU Trends</title>
 </head>
 <body>
+    <header>
+        <h1>End of the <span>GPU Apocalypse</span></h1>
+    </header>
     <main>
-        <section>
-            <div>
+        <section id="trends">
+            <div class="container">
                 <p>With the downturn in the cryptocurrency markets in early 2022 and the successful transistion of Ethereum from a proof-of-work to a proof-of-stake consensus mechanism, along with an easing global chip shortage and excess inventories, the GPU Apocalypse appears to be at it's end.<br>The following graphs track GPU price trends using submissions to the subreddit r/buildapcsales, a community where links to sales on PC parts are shared. </p>
-            </div>
-        </section>
-        <section>
-            <figure id="gpu-chart-container">
-                <canvas id="gpu-trend-chart" style="width:100%;height:100%;"></canvas>
-            </figure>
-            <div>
+                <figure id="trend-chart-container">
+                    <canvas id="trend-chart" style="width:100%;height:100%;"></canvas>
+                </figure>
                 <details>
                     <summary>Chart Details</summary>
                     Posts flagged as GPUs on r/buildapcsales are parsed for the price and model of the GPU. To adjust for the different price levels of GPU models, the posted price is divided by the model's MSRP. Typically, new models are priced at their MSRP before gradually decreasing as the model ages and newer models are released. With the chip shortage in 2021, GPU prices rose well above their MSRP and GPU posts to r/buildapcsales became scarce. Since the start of 2022, GPU prices have fallen drastically - now well below their MSRPs on average.
                 </details>
             </div>
         </section>
-        <hr>
-        <section>
-            <figure>
-                <canvas id="amd-price-chart"></canvas>
-            </figure>
-            <figure>
-                <canvas id="nvidia-price-chart"></canvas>
-            </figure>
+        
+        <section id="prices">
+            <div class="container">
+                <figure>
+                    <canvas id="amd-price-chart" style="width:100%;height:100%;"></canvas>
+                </figure>
+                <figure>
+                    <canvas id="nvidia-price-chart" style="width:100%;height:100%;"></canvas>
+                </figure>
+            </div>
         </section>
-        <hr>
-        <section>
-            <div>
-                <select name="model" id="model-select" onchange="updatePostsTable()"></select>
+
+        <section id="posts">
+            <div class="container">
+                <label for="model-select">GPU Model</label>
+                <div class="dropdown"></dvi><select name="model" id="model-select" onchange="updatePostsTable()"></select></div>
                 <table id="gpu-posts-table">
                     <thead>
                         <tr>
@@ -55,10 +57,10 @@
                     </thead>
                     <tbody id="gpu-posts-table-data"></tbody>
                 </table>
-            </div>
+            </div>    
         </section>
-    </main>
 
+    </main>
 
     <script src="{{url_for('static', filename='chart.js')}}"></script>
     <script src="{{url_for('static', filename='tables.js')}}"></script>
@@ -70,7 +72,7 @@
 
         fetch('./gpu_trend')
             .then(response => response.json())
-            .then(data => drawTrendChart(data, 'gpu-trend-chart'));
+            .then(data => drawTrendChart(data, 'trend-chart'));
 
         fetch('./gpu_prices')
             .then(response => response.json())

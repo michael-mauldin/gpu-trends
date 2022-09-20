@@ -58,5 +58,11 @@ async function updatePostsTable() {
                     </tr>`
                 table.innerHTML += row
             });
+
+            if (data.length() < 5) {
+                for (let i = 0; step < 5-data.length(); step++) {
+                        table.innerHTML += '<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+                }
+            }
         });
 }
