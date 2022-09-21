@@ -57,7 +57,7 @@ function drawTrendChart(data, canvas_id) {
             {
                 type: 'line',
                 data: data['scatter'].map(d => ({'x': new Date(d.postdate), 'y': d.price_to_msrp})),
-                label: 'Posts',
+                label: 'Individual Posts',
                 showLine: false,
                 pointBackgroundColor: 'rgb(215, 215, 215, 0.5)',
                 pointBorderColor: 'rgb(215, 215, 215, 0.5)',
@@ -147,7 +147,8 @@ function drawTrendChart(data, canvas_id) {
                 title: {
                     display: true,
                     color: '#dbdbdb',
-                    text: 'Price-to-MSRP Trend',
+                    text: 'Prices as % of MSRP trended, all gpu models by company',
+                    // text: 'Price-to-MSRP Trend',
                     align: 'start',
                     font: {
                         size: 16,
@@ -158,7 +159,7 @@ function drawTrendChart(data, canvas_id) {
                     }
                 },
                 subtitle: {
-                    display: true,
+                    display: false,
                     color: '#dbdbdb',
                     align: 'start',
                     text: 'Average price as a % of MSRP across all GPU models for the past 24 months',
@@ -187,7 +188,6 @@ function drawTrendChart(data, canvas_id) {
 function drawPriceChart(data, company, backgroundColor, canvas_id) {
     const ctx = document.getElementById(canvas_id).getContext('2d');
     const trendChart = new Chart(ctx, {
-       
         data: {
             labels: data[company].map(d => d.model),
             datasets: [
@@ -313,7 +313,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                 title: {
                     display: true,
                     color: '#dbdbdb',
-                    text: `${company} Price Movement By Model`,
+                    text: `${company} 30-Day Average Price, % change from 3 months ago`,
                     align: 'start',
                     font: {
                         size: 16,
@@ -324,7 +324,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                     }
                 },
                 subtitle: {
-                    display: true,
+                    display: false,
                     color: '#dbdbdb',
                     align: 'start',
                     text: 'The current 30-day avg price vs. the 30-day avg price 3 months ago',

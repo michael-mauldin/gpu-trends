@@ -2,6 +2,7 @@
     --background-color: #11191f;
     --chart-background-color: #0c151c;
     --text-color: #dbdbdb;
+    --text-color-muted: rgb(219, 219, 219, 0.4);
     --font-size: 16px;
     --spacing: 1rem;
     --spacing-vertical: calc(var(--spacing) * 2);
@@ -74,11 +75,15 @@ header, main, footer {
 }
 
 header h1 {
-    text-align: center;
+    padding: 0;
+    margin: 0 auto;
+    text-align: left;
+    text-transform: uppercase;
     font-weight: 800;
-    font-size: calc(var(--font-size) * 3.0);
+    font-size: calc(var(--font-size) * 2.0);
+    line-height: 1.0;
     background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 25%, rgba(100,100,100,1) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,1) 25%, rgba(100,100,100,1) 55%);
     background-size: 100%;
     background-repeat: repeat;
     background-clip: text;
@@ -88,7 +93,16 @@ header h1 {
     -moz-text-fill-color: transparent;
 }
 
+header h1 em {
+    font-style: normal;
+    font-size: calc(var(--font-size) * 2.5);
+    display: inline-block;
+    vertical-align: -6%;
+    line-height: normal;
+}
+
 header h1 span {
+    font-size: calc(var(--font-size) * 3.0);
     background-color: #cf1261;
     background: conic-gradient(from 0deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
     background-size: 100%;
@@ -113,7 +127,7 @@ section {
     width: 100%;
     max-width: var(--container-width);
     margin: 0 auto;
-    padding: 0 var(--spacing);
+    padding: var(--spacing-vertical) var(--spacing);
 }
 
 .container p {
@@ -126,19 +140,19 @@ figure {
     margin: 0 auto;
 }
 
-#prices div figure {
-    width: calc(var(--container-width) * 0.5);
+.chart-container figure {
+    width: 100%;
     padding: 1rem;
     margin: 0;
 }
 
-#prices .container {
+.chart-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
     max-width: 100%;
-    margin: 1rem;
+    margin: 0;
     padding: 0;
 }
 
@@ -225,7 +239,7 @@ option {
 
 table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
     text-indent: 0;
 }
@@ -240,11 +254,32 @@ table th:last-child {
 
 thead tr {
     background-color: rgba(10, 53, 67, 0.8);
-    border: 1px solid white;
+    border: 1px solid 'rgb(219, 219, 219, 0.4)';
     border-radius: 0.25rem;
 }
 
 tr {
     height: calc(var(--spacing) * 3.0);
-    border-bottom: 1px solid var(--text-color);
+    text-align: center;
 }
+
+tbody tr  {
+    border-bottom: 1px solid var(--text-color-muted);
+}
+
+table a {
+    color: var(--text-color);
+}
+
+/* External link icon */
+table a::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    margin-left: 4px;
+    background-image: url("data:image/svg+xml,%3Csvg fill='%23dbdbdb' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32px' height='32px'%3E%3Cpath d='M 18 5 L 18 7 L 23.5625 7 L 11.28125 19.28125 L 12.71875 20.71875 L 25 8.4375 L 25 14 L 27 14 L 27 5 Z M 5 9 L 5 27 L 23 27 L 23 14 L 21 16 L 21 25 L 7 25 L 7 11 L 16 11 L 18 9 Z'/%3E%3C/svg%3E");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+}  
