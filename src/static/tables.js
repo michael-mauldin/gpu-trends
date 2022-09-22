@@ -54,7 +54,7 @@ async function updatePostsTable() {
                         <td>${d.model}</td>
                         <td>${currencyFormatter.format(d.price)}</td>
                         <td>${percentFormatter.format(d.price_to_msrp)}</td>
-                        <td><a href="${d.url}">Link</a></td>
+                        <td><a href="${d.url}" target="_blank">Link</a></td>
                     </tr>`
                 table.innerHTML += row
             });

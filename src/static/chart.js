@@ -1,4 +1,6 @@
 function drawTrendChart(data, canvas_id) {
+    
+    
     const ctx = document.getElementById(canvas_id).getContext('2d');
     const trendChart = new Chart(ctx, {
         data: { datasets: [
@@ -18,7 +20,7 @@ function drawTrendChart(data, canvas_id) {
                     font: {
                         weight: 'bold',
                         style: 'italic',
-                        size: 14,
+                        size: 12,
                     },
                     display: function(context) { 
                         return (context.dataIndex === context.dataset.data.length - 1)
@@ -44,7 +46,7 @@ function drawTrendChart(data, canvas_id) {
                     font: {
                         weight: 'bold',
                         style: 'italic',
-                        size: 14,
+                        size: 12,
                     },
                     display: function(context) { 
                         return (context.dataIndex === context.dataset.data.length - 1)
@@ -158,15 +160,6 @@ function drawTrendChart(data, canvas_id) {
                         bottom: 0
                     }
                 },
-                subtitle: {
-                    display: false,
-                    color: '#dbdbdb',
-                    align: 'start',
-                    text: 'Average price as a % of MSRP across all GPU models for the past 24 months',
-                    font: {
-                        size: 16,
-                    }
-                },
                 tooltip: {
                     enable: false,
                     filter: function (tooltipItem, data) {
@@ -204,7 +197,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                         display: true,
                         color: '#2ccdcd',
                         font: {
-                            size: 12,                            
+                            size: 16,                            
                             weight: 'bold',
                         },
                         align: 'left',
@@ -242,7 +235,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
         },
         options: {
             indexAxis: 'y',
-            responsive: true,
+            responsive: false,
             maintainAspectRatio: false,
             animation: false,
             scales: {
@@ -257,7 +250,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                         color: '#dbdbdb',
                         drawTicks: true,
                         font: {
-                            size: 12,
+                            size: 16,
                         },
                         padding: 2,
                         callback: (value, index, values) => {
@@ -278,7 +271,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                     ticks: {
                         color: '#dbdbdb',
                         font: {
-                            size: 12,
+                            size: 16,
                         },
                         padding: 2,
                     },
@@ -306,7 +299,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                         boxWidth: 20,
                         boxHeight: 8,
                         font: {
-                            size: 12,
+                            size: 16,
                         },
                     },
                 },
@@ -329,7 +322,7 @@ function drawPriceChart(data, company, backgroundColor, canvas_id) {
                     align: 'start',
                     text: 'The current 30-day avg price vs. the 30-day avg price 3 months ago',
                     font: {
-                        size: 12,
+                        size: 16,
                     }
                 },
             }

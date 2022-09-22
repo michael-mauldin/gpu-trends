@@ -19,43 +19,57 @@
   box-sizing: border-box;
 }
 
-@media (min-width: 576px) {
-    header, main, section {
+@media screen and (min-width: 576px) {
+    header, main, footer, section {
         --spacing-vertical: calc(var(--spacing) * 2.5);
         --font-size: 14px;
     }
-    .container {
+    :root {
         --container-width: 510px;
     }
+    .container {
+        max-width: 510px;
+        padding: 0;
+    }
 }
-@media (min-width: 768px) {
-    header, main, section {
+@media screen and (min-width: 768px) {
+    header, main, footer, section {
         --spacing-vertical: calc(var(--spacing) * 3.0);
         --font-size: 16px;
     }
-    .container {
+    :root {
         --container-width: 700px;
     }
+    .container {
+        max-width: 700px;
+    }
 }
-@media (min-width: 992px) {
-    header, main, section {
+@media screen and (min-width: 992px) {
+    header, main, footer, section {
         --spacing-vertical: calc(var(--spacing) * 3.5);
         --font-size: 18px;
     }
+    :root {
+        --container-width: 920px;
+    }
     .container {
-        --container-width: 700px;
+        max-width: 920px;
     }
 }
-@media (min-width: 1200px) {
-    header, main, section {
+/* @media screen and (min-width: 1200px) {
+    header, main, footer, section {
         --spacing-vertical: calc(var(--spacing) * 4.0);
         --font-size: 20px;
     }
-    .container {
-        --container-width: 900px;
+    :root {
+        --container-width: 1130px;
     }
-}
+    .container {
+        max-width: 1130px;
+    }
+} */
 
+/* Basic Layout ---- */
 body {
     background-color: var(--background-color);
     background-repeat: no-repeat;
@@ -71,21 +85,27 @@ body {
 header, main, footer {
     width: 100%;
     margin: 0 auto;
-    padding: 0;
+    padding: var(--spacing-vertical) 0;
 }
 
-header h1 {
-    padding: 0;
-    margin: 0 auto;
+
+h1 span, h2 span {
     text-align: left;
     text-transform: uppercase;
     font-weight: 800;
-    font-size: calc(var(--font-size) * 2.0);
     line-height: 1.0;
     background: rgb(255,255,255);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 25%, rgba(100,100,100,1) 55%);
-    background-size: 100%;
-    background-repeat: repeat;
+    background: linear-gradient(0deg, rgba(100,100,100,1) 0%, rgba(255,255,255,1) 50%);
+    background-clip: text;
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+h1 span span {
+    font-size: calc(var(--font-size) * 2.5);
+    background: conic-gradient(from 0deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; 
@@ -93,7 +113,7 @@ header h1 {
     -moz-text-fill-color: transparent;
 }
 
-header h1 em {
+h1 span em {
     font-style: normal;
     font-size: calc(var(--font-size) * 2.5);
     display: inline-block;
@@ -101,82 +121,54 @@ header h1 em {
     line-height: normal;
 }
 
-header h1 span {
-    font-size: calc(var(--font-size) * 3.0);
-    background-color: #cf1261;
-    background: conic-gradient(from 0deg at 40% -25%, #ffd700, #f79d03, #ee6907, #e6390a, #de0d0d, #d61039, #cf1261, #c71585, #cf1261, #d61039, #de0d0d, #ee6907, #f79d03, #ffd700, #ffd700, #ffd700);
-    background-size: 100%;
-    background-repeat: repeat;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; 
-    -moz-background-clip: text;
-    -moz-text-fill-color: transparent;
-}
-
 main {
+    display: block;
     background: linear-gradient(180deg, #11191f 0%, rgba(10, 53, 67, 0.5) 33%, rgba(10, 53, 67, 0.5) 66%, #11191f 100%);
 }
 
 section {
     display: flex;
     align-items: center;
+    margin-bottom: var(--spacing-vertical);
 }
 
 .container {
     width: 100%;
-    max-width: var(--container-width);
     margin: 0 auto;
-    padding: var(--spacing-vertical) var(--spacing);
-}
-
-.container p {
-    margin-bottom: 2rem;
+    padding: 0 var(--spacing);
 }
 
 figure {
-    height: calc(var(--container-width) * 0.5);
-    padding: var(--spacing) 0s;
-    margin: 0 auto;
-}
-
-.chart-container figure {
     width: 100%;
-    padding: 1rem;
-    margin: 0;
-}
-
-.chart-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
+    margin: var(--spacing) auto;
     padding: 0;
+    aspect-ratio: 1/1;
 }
 
-details {
-    border: 1px solid var(--text-color);
-    border-radius: 4px;
-    padding: .5em .5em 0;
-    margin: var(--spacing) 3rem var(--spacing) 3rem;
-    cursor: pointer;
+@media screen and (min-width: 576px) {
+    figure {
+        aspect-ratio: 4/3;
+    }
+}
+@media screen and (min-width: 768px) {
+    figure {
+        aspect-ratio: 16/9;
+    }
+}
+@media screen and (min-width: 992px) {
+    figure {
+        aspect-ratio: 16/9;
+    }
+}
+@media screen and (min-width: 1200px) {    
+    figure {
+        aspect-ratio: 16/9;
+    }
 }
 
-summary {
-    font-weight: bold;
-    margin: -.5em -.5em 0;
-    padding: .5em;
-}
-
-details[open] {
-    padding: .5em;
-}
-
-details[open] summary {
-    border-bottom: 1px solid var(--text-color);
-    margin-bottom: .5em;
+label {
+    width: 100px;
+    display: inline-block;
 }
 
 select {
@@ -282,4 +274,33 @@ table a::after {
     background-repeat: no-repeat;
     background-size: contain;
     display: inline-block;
-}  
+}
+
+th:nth-child(2), td:nth-child(2),
+th:nth-child(3), td:nth-child(3) {
+    display: none;
+}
+
+@media screen and (min-width: 576px) {
+    th:nth-child(3), td:nth-child(3) {
+        display: table-cell;
+    }
+}
+@media screen and (min-width: 768px) {
+    th:nth-child(2), td:nth-child(2),
+    th:nth-child(3), td:nth-child(3) {
+        display: table-cell;
+    }
+}
+@media screen and (min-width: 992px) {
+    th:nth-child(2), td:nth-child(2),
+    th:nth-child(3), td:nth-child(3) {
+        display: table-cell;
+    }
+}
+@media screen and (min-width: 1200px) {    
+    th:nth-child(2), td:nth-child(2),
+    th:nth-child(3), td:nth-child(3) {
+        display: table-cell;
+    }
+}
