@@ -1,4 +1,5 @@
 from typing import Any
+
 import pandas as pd
 import sqlite3
 
@@ -29,7 +30,7 @@ def get_gpu_trend_chart_data(database: str) -> dict[str, str]:
                 group[['price_to_msrp']]
                 .sort_index()
                 .resample('W').mean()
-                .rolling('30D').mean()
+                .rolling('30D').mean()  # type: ignore
                 .reset_index()
                 .to_dict(orient='records')
             )

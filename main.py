@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 
-from src.posts import db
-from src.posts import posts
+from src.postdb import db
 
 DATABASE: str = 'posts.db'
 

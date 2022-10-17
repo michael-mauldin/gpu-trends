@@ -3,7 +3,7 @@ from typing import Any
 
 from flask import Flask, render_template, request
 
-from src.charts import charts
+from src.posts import charts
 
 
 """
@@ -45,3 +45,9 @@ def get_gpu_posts() -> str:
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+# TODO
+
+# [ ] Section Blurbs.
+# [ ] Data last updated query and component. 
